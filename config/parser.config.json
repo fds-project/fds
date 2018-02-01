@@ -1,0 +1,1 @@
+{"type": "json", "fields": [{"position": "ip_address", "name": "bsn", "type": "string"}, {"position": "last_name", "name": "lastName", "type": "string"}, {"position": "first_name", "name": "firstName", "type": "string"}]}

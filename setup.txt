@@ -1,0 +1,56 @@
+
+# Install the Python environment, backend web server and the Python package manager 
+apt-get install python3 php5 mysql-server php5-mysql python3-pip git openssl libssl-dev
+
+# Restart the webserver
+service apache2 restart
+
+# Clone the repo
+git clone [this GIT URL]
+cd ics-fds
+
+# Install the required dependencies
+pip3 install -r requirements.txt
+
+# Set-up the backend environment
+mkdir /var/www/html/fds/
+cp -rf backend/* /var/www/html/fds/
+
+# Set-up the database
+mysql -u root -p
+Enter the password you configured during the server installation and execute the following commands:
+
+> CREATE USER `fds`@`localhost` IDENTIFIED BY 'SecurePassword';
+
+> CREATE DATABASE fds;
+
+> GRANT ALL PRIVILEGES ON fds.* TO `fds`@`localhost` IDENTIFIED BY 'SecurePassword';
+
+> FLUSH PRIVILEGES;
+
+> exit
+
+
+Don't forget to change the default password to something secure :)
+
+mysql -u fds -p fds < database.sql
+> Enter the password you entered for the wasec user
+
+Open /var/www/html/fds/includes/db.php with your favorite text-editor (VIM!!1!)
+Edit the password so it matches the fds@localhost MySQL password
+
+Explore the application by browsing to http://localhost/fds/
+The default username and password are:
+USER: admin@fds.local
+PASS: Test123
+
+Remote connections are also allowed by the default apache2 configuration so the private IP should also work.
+
+The API endpoint will be available at:
+http://localhost/fds/parser.php
+
+A more heavy-weight API with encryption support is available at:
+http://localhost/fds/parser_extended.php
+
+You can start the server by running the following commands:
+python3 main.py
